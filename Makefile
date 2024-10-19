@@ -3,4 +3,4 @@ SHELL := /bin/bash
 
 .PHONY: dev
 dev:
-	@go run cmd/app/main.go
+	@go run cmd/operator/main.go
