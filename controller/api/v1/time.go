@@ -15,10 +15,11 @@ var timeFormats = []string{
 }
 
 // Time is a wrapper around the [time.Time] type that supports JSON and YAML serialization.
+//
 // It supports the following formats:
-// - [time.TimeOnly]
-// - [time.Kitchen]
-// - "15:04:05Z07:00"
+//   - [time.TimeOnly]
+//   - [time.Kitchen]
+//   - "15:04:05Z07:00"
 type Time struct {
 	time.Time
 	format string
@@ -33,7 +34,7 @@ var _ json.Marshaler = (*Time)(nil)
 
 // MarshalJSON implements the [json.Marshaler] interface.
 func (t *Time) MarshalJSON() ([]byte, error) {
-	return json.Marshal(t.Time.Format(t.format))
+	return json.Marshal(t.String())
 }
 
 var _ json.Unmarshaler = (*Time)(nil)
@@ -46,13 +47,7 @@ func (t *Time) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	for _, format := range timeFormats {
-		t.Time, err = time.Parse(format, raw)
-		if err == nil {
-			return nil
-		}
-	}
-	return err
+	return t.parseFrom(raw)
 }
 
 var _ yaml.Marshaler = (*Time)(nil)
@@ -71,6 +66,11 @@ func (t *Time) UnmarshalYAML(node *yaml.Node) error {
 		return err
 	}
 
+	return t.parseFrom(raw)
+}
+
+// parseFrom parses the raw string into the [Time] type.
+func (t *Time) parseFrom(raw string) error {
 	var err error
 	for _, format := range timeFormats {
 		t.Time, err = time.Parse(format, raw)
