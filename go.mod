@@ -7,8 +7,8 @@ toolchain go1.23.2
 require (
 	github.com/lvlcn-t/loggerhead v0.3.1
 	gopkg.in/yaml.v3 v3.0.1
-	k8s.io/api v0.31.1
-	k8s.io/apimachinery v0.31.1
+	k8s.io/api v0.31.2
+	k8s.io/apimachinery v0.31.2
 	sigs.k8s.io/controller-runtime v0.19.0
 )
 
