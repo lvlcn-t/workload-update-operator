@@ -3,8 +3,8 @@ package v1
 import (
 	"context"
 	"errors"
-	"os"
 
+	"github.com/lvlcn-t/go-kit/env"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -57,11 +57,7 @@ func (o *WorkloadUpdateConfig) DeepCopyObject() runtime.Object {
 
 // LoadConfig loads the operator configuration from the Kubernetes API.
 func LoadConfig(ctx context.Context, c client.Client) (*OperatorConfig, error) {
-	namespace, ok := os.LookupEnv("WORKLOAD_UPDATE_OPERATOR_NAMESPACE")
-	if !ok {
-		namespace = metav1.NamespaceDefault
-	}
-
+	namespace := env.GetWithFallback("WORKLOAD_UPDATE_OPERATOR_NAMESPACE", metav1.NamespaceDefault)
 	cfg := &WorkloadUpdateConfig{}
 	if err := c.Get(ctx, client.ObjectKey{Name: "workload-update-operator", Namespace: namespace}, cfg); err != nil {
 		return nil, err
