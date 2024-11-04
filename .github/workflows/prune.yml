@@ -11,7 +11,7 @@ jobs:
   prune:
     uses: lvlcn-t/meta/.github/workflows/prune.yml@main
     with:
-      container: ${{ github.repository.name }}
-      chart: charts/${{ github.repository.name }}
+      container: workload-update-operator
+      chart: charts/workload-update-operator
       keep-younger-than: 7
       prune-untagged: true
