@@ -7,7 +7,7 @@ require (
 	github.com/lvlcn-t/go-kit/env v0.0.0-20241026190544-023867e28697
 	github.com/lvlcn-t/loggerhead v0.3.1
 	gopkg.in/yaml.v3 v3.0.1
-	k8s.io/api v0.31.3
+	k8s.io/api v0.32.0
 	k8s.io/apimachinery v0.32.0
 	sigs.k8s.io/controller-runtime v0.19.3
 )
